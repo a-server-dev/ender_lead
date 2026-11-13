@@ -77,10 +77,10 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
             return;
         }
         loadRules();
-        registerRecipe();
+        refreshRecipe();
         getServer().getPluginManager().registerEvents(this, this);
         if (getCommand("enderlead") != null) getCommand("enderlead").setExecutor(this);
-        getLogger().info("Ender Lead 1.0.4 enabled for Paper 26.3");
+        getLogger().info("Ender Lead 1.0.5 enabled for Paper 26.3");
     }
 
     private void loadRules() {
@@ -90,8 +90,15 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
                 .map(s -> s.toLowerCase(Locale.ROOT)).collect(Collectors.toUnmodifiableSet());
     }
 
-    private void registerRecipe() {
-        ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(this, "ender_lead_recipe"), newEmptyLead());
+    /** Register or remove the recipe according to config.yml (also used by /enderlead reload). */
+    private void refreshRecipe() {
+        NamespacedKey recipeKey = new NamespacedKey(this, "ender_lead_recipe");
+        Bukkit.removeRecipe(recipeKey);
+        if (!getConfig().getBoolean("crafting.enabled", true)) {
+            getLogger().info("EnderLead crafting recipe disabled by config.");
+            return;
+        }
+        ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, newEmptyLead());
         recipe.addIngredient(Material.LEAD);
         recipe.addIngredient(5, Material.ENDER_PEARL);
         Bukkit.addRecipe(recipe);
@@ -467,7 +474,9 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             reloadConfig();
             loadRules();
-            sender.sendMessage("§aEnderLead 設定を再読み込みしました。");
+            refreshRecipe();
+            sender.sendMessage("§aEnderLead 設定を再読み込みしました。クラフト: "
+                    + (getConfig().getBoolean("crafting.enabled", true) ? "§a有効" : "§c無効"));
             return true;
         }
         if (args.length >= 2 && args[0].equalsIgnoreCase("give")) {
