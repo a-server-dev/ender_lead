@@ -1,0 +1,13 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Local development
+*.log
+.DS_Store
+Thumbs.db
