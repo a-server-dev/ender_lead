@@ -51,7 +51,7 @@ GitHub Actionsでビルドする場合は**EnderLead用の別リポジトリ**�
 
 ## 検証状況
 
-ソースレビューおよびZIP構造確認まで。現在の実行環境にJava 25・Paper 26.3の依存jarがないため、コンパイルと実機テストは未実施です。Mercenaryとの互換性も実機検証が必要です。
+GitHub Actions（Java 25 / Paper API 26.3）の Gradle ビルド成功を確認済みです。実際のサーバー上での動作確認と、Mercenary / pipi_pve との併用試験は未実施です。
 
 ## pipi_pve（添付の 0.1.0）との互換性
 
