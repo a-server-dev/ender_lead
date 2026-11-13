@@ -1,4 +1,4 @@
-# EnderLead 1.0.5 — Paper 26.3 / Java 25
+# EnderLead 1.0.6 — Paper 26.3 / Java 25
 
 EnderLeadでモブを捕獲し、**同じPaperサーバー上の別ワールド**でも解放できます。解放成功時にリードは壊れます。捕獲・解放はどちらも左右クリック対応（左クリックはメインハンドのみ）。
 
@@ -44,7 +44,7 @@ EnderLeadでモブを捕獲し、**同じPaperサーバー上の別ワールド*
 1. Java 25を指定し、Gradle 9.2.1以降を利用。
 2. プロジェクトフォルダをIntelliJ IDEAで開く。
 3. Gradle Tasks → `build` を実行。
-4. `build/libs/EnderLead-1.0.5.jar` をPaperサーバーの `plugins/` に配置。
+4. `build/libs/EnderLead-1.0.6.jar` をPaperサーバーの `plugins/` に配置。
 5. 同じサーバーで `Mercenary.jar` が有効であることを確認し、再起動。
 
 GitHub Actionsでビルドする場合は**EnderLead用の別リポジトリ**にソースを置いてください。Mercenaryのリポジトリにコミットしてはいけません。
@@ -75,3 +75,7 @@ crafting:
 `/enderlead reload` を実行すると、現在のレシピが再登録／削除されます。
 `enabled: false` にしても、管理者コマンド `/enderlead give <プレイヤー>` による入手や既存のリードの捕獲・解放は利用できます。
 古い `config.yml` には `crafting` キーがないため、クラフトを無効にする場合は手動でこの設定を追加してください。
+
+## 管理コマンドの権限
+
+`/enderlead give` と `/enderlead reload` はOPプレイヤーとサーバーコンソールのみ実行できます。`enderlead.admin` 権限をOPでないプレイヤーに付与しても実行できません。モブの捕獲・解放は従来の `enderlead.use` に従い、OP限定ではありません。
