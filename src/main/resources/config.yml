@@ -1,3 +1,9 @@
+# エンダーリードのクラフトレシピを有効にするか。
+# false: クラフト不可（/enderlead give と既存リードの使用は可能）。
+# 変更後は /enderlead reload で反映します。
+crafting:
+  enabled: true
+
 # モブを捕獲できる条件を指定します。EntityType の英語名を使用してください。
 blocked-mobs:
   - ENDER_DRAGON
