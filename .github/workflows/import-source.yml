@@ -19,13 +19,15 @@ jobs:
         run: |
           set -euo pipefail
           test -f source/EnderLead-1.0.3.tar.xz || exit 0
+          echo "11eeb433ef5ac5cbac4a6c0cdaaf17c9703dde716451b91cc96adeb9584b483d  source/EnderLead-1.0.3.tar.xz" | sha256sum -c -
           mkdir -p .source-import
           tar -xJf source/EnderLead-1.0.3.tar.xz -C .source-import
           cp -a .source-import/EnderLead-1.0.3/. .
           rm -rf .source-import
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md build.gradle.kts settings.gradle.kts src .github/workflows/build.yml
+          git rm -r source
+          git add -A
           if ! git diff --cached --quiet; then
             git commit -m "Import complete EnderLead v1.0.3 source and Gradle project"
             git push
