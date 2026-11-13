@@ -1,4 +1,4 @@
-# EnderLead 1.0.3 — Paper 26.3 / Java 25
+# EnderLead 1.0.4 — Paper 26.3 / Java 25
 
 EnderLeadでモブを捕獲し、**同じPaperサーバー上の別ワールド**でも解放できます。解放成功時にリードは壊れます。捕獲・解放はどちらも左右クリック対応（左クリックはメインハンドのみ）。
 
@@ -44,7 +44,7 @@ EnderLeadでモブを捕獲し、**同じPaperサーバー上の別ワールド*
 1. Java 25を指定し、Gradle 9.2.1以降を利用。
 2. プロジェクトフォルダをIntelliJ IDEAで開く。
 3. Gradle Tasks → `build` を実行。
-4. `build/libs/EnderLead-1.0.3.jar` をPaperサーバーの `plugins/` に配置。
+4. `build/libs/EnderLead-1.0.4.jar` をPaperサーバーの `plugins/` に配置。
 5. 同じサーバーで `Mercenary.jar` が有効であることを確認し、再起動。
 
 GitHub Actionsでビルドする場合は**EnderLead用の別リポジトリ**にソースを置いてください。Mercenaryのリポジトリにコミットしてはいけません。
@@ -52,3 +52,13 @@ GitHub Actionsでビルドする場合は**EnderLead用の別リポジトリ**�
 ## 検証状況
 
 ソースレビューおよびZIP構造確認まで。現在の実行環境にJava 25・Paper 26.3の依存jarがないため、コンパイルと実機テストは未実施です。Mercenaryとの互換性も実機検証が必要です。
+
+## pipi_pve（添付の 0.1.0）との互換性
+
+`pipi_pve` が作成した敵・ボス・召喚モブ・乗り物・補助モブはエンダーリードで捕獲できません。
+
+- エンティティのPDCにある `pipi_pve:*` のキーで識別します。
+- 専用PDCがない戦闘中の召喚モブなどは、実行中の PvE `Run` のエンティティUUID管理情報で識別します。
+- 同じ種類の通常の野生モブは捕獲できます（既存のボス・HP制限は適用）。
+- PvE側のプラグイン・リポジトリを変更する必要はありません。
+- PvE内部構造が変わり判定不能になった場合は、誤捕獲を防ぐためPvE稼働中の捕獲を禁止します。
