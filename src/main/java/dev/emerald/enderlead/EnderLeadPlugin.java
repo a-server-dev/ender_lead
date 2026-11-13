@@ -80,7 +80,7 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
         registerRecipe();
         getServer().getPluginManager().registerEvents(this, this);
         if (getCommand("enderlead") != null) getCommand("enderlead").setExecutor(this);
-        getLogger().info("Ender Lead 1.0.3 enabled for Paper 26.3");
+        getLogger().info("Ender Lead 1.0.4 enabled for Paper 26.3");
     }
 
     private void loadRules() {
@@ -136,6 +136,7 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
     }
 
     private String canCapture(LivingEntity mob) {
+        if (PveProtection.isPveEntity(mob)) return "PvEのモブは捕獲できません。";
         if (mob instanceof Player || mob instanceof ArmorStand || mob instanceof Boss) return "このモブは捕獲できません。";
         if (MercenarySupport.isProtectedOther(mob)) return "メイドやそのAIは捕獲できません。";
         if (MercenarySupport.isMercenaryBody(mob) && !getConfig().getBoolean("mercenary.enabled", true))
@@ -160,6 +161,15 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
         return null;
     }
 
+    /** Protect PvE entities before their own right-click handlers can interact with an Ender Lead. */
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
+    public void onPveMobRightClick(PlayerInteractEntityEvent event) {
+        if (!isEnderLead(getHeldItem(event.getPlayer(), event.getHand()))) return;
+        if (!PveProtection.isPveEntity(event.getRightClicked())) return;
+        event.setCancelled(true);
+        event.getPlayer().sendMessage("§cPvEのモブは捕獲できません。");
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onClickMob(PlayerInteractEntityEvent event) {
         EquipmentSlot hand = event.getHand();
@@ -167,6 +177,8 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
         Player player = event.getPlayer();
         ItemStack item = getHeldItem(player, hand);
         if (!isEnderLead(item)) return;
+        // Already rejected at LOWEST; do not repeat the warning or process the click.
+        if (PveProtection.isPveEntity(event.getRightClicked())) return;
         // Mercenary cancels its own right-click at HIGH to open a GUI; we still need to capture it.
         if (event.isCancelled() && !MercenarySupport.isMercenaryBody(event.getRightClicked())
                 && !MercenarySupport.isMercenaryBrain(event.getRightClicked())) return;
@@ -218,6 +230,10 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
         LivingEntity living = clicked;
         boolean untracked = false;
         try {
+            if (PveProtection.isPveEntity(clicked)) {
+                player.sendMessage("§cPvEのモブは捕獲できません。");
+                return;
+            }
             if (MercenarySupport.isProtectedOther(clicked)) {
                 player.sendMessage("§cMercenaryのメイドはこのエンダーリードでは捕獲できません。");
                 return;
