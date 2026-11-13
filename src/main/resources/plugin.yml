@@ -1,0 +1,19 @@
+name: EnderLead
+version: '1.0.3'
+main: dev.emerald.enderlead.EnderLeadPlugin
+softdepend: [Mercenary]
+api-version: '26.3'
+author: Emerald
+website: https://papermc.io/
+description: One-use cross-world mob storage using an Ender Lead.
+commands:
+  enderlead:
+    description: Give an Ender Lead or reload the configuration.
+    usage: /enderlead <give|reload>
+permissions:
+  enderlead.use:
+    description: Use Ender Leads.
+    default: true
+  enderlead.admin:
+    description: Give Ender Leads and reload the configuration.
+    default: op

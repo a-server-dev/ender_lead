@@ -1,0 +1,31 @@
+# モブを捕獲できる条件を指定します。EntityType の英語名を使用してください。
+blocked-mobs:
+  - ENDER_DRAGON
+  - WITHER
+  - WARDEN
+  - ELDER_GUARDIAN
+  - RAVAGER
+  - EVOKER
+  - PIGLIN_BRUTE
+  - GIANT
+  - ZOGLIN
+  - CREAKING
+
+# hostile (= Bukkit Enemy) の最大HPがこの値より大きい場合は格納不可。
+# -1 を指定すると最大HPによる制限を無効化します。
+max-hostile-health: 40.0
+
+# 外部プラグインが管理するNPCを保護するために一般的な識別子をブロック。
+prevent-npc-metadata: true
+blocked-scoreboard-tags:
+  - enderlead_no_capture
+  - boss
+  - mythic_boss
+
+# 装備やインベントリの大きなモブが持つNBTは、アイテムに詰め込むと
+# クライアントのパケット制限に抵触する場合があるため、上限を設けます。
+max-snapshot-chars: 65536
+
+# Mercenaryの傭兵本体と透明AIへの捕獲対応。雇用中は本人のみ回収可能。
+mercenary:
+  enabled: true
