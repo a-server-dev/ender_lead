@@ -80,7 +80,7 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
         refreshRecipe();
         getServer().getPluginManager().registerEvents(this, this);
         if (getCommand("enderlead") != null) getCommand("enderlead").setExecutor(this);
-        getLogger().info("Ender Lead 1.0.5 enabled for Paper 26.3");
+        getLogger().info("Ender Lead 1.0.6 enabled for Paper 26.3");
     }
 
     private void loadRules() {
@@ -467,7 +467,7 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("enderlead.admin")) {
+        if (!sender.isOp()) {
             sender.sendMessage("§c権限がありません。");
             return true;
         }
@@ -512,7 +512,7 @@ public final class EnderLeadPlugin extends JavaPlugin implements Listener, TabEx
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (!sender.hasPermission("enderlead.admin")) return List.of();
+        if (!sender.isOp()) return List.of();
         if (args.length == 1) return List.of("give", "reload");
         if (args.length == 2 && args[0].equalsIgnoreCase("give"))
             return Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
