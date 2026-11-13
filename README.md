@@ -1,4 +1,4 @@
-# EnderLead 1.0.4 — Paper 26.3 / Java 25
+# EnderLead 1.0.5 — Paper 26.3 / Java 25
 
 EnderLeadでモブを捕獲し、**同じPaperサーバー上の別ワールド**でも解放できます。解放成功時にリードは壊れます。捕獲・解放はどちらも左右クリック対応（左クリックはメインハンドのみ）。
 
@@ -44,7 +44,7 @@ EnderLeadでモブを捕獲し、**同じPaperサーバー上の別ワールド*
 1. Java 25を指定し、Gradle 9.2.1以降を利用。
 2. プロジェクトフォルダをIntelliJ IDEAで開く。
 3. Gradle Tasks → `build` を実行。
-4. `build/libs/EnderLead-1.0.4.jar` をPaperサーバーの `plugins/` に配置。
+4. `build/libs/EnderLead-1.0.5.jar` をPaperサーバーの `plugins/` に配置。
 5. 同じサーバーで `Mercenary.jar` が有効であることを確認し、再起動。
 
 GitHub Actionsでビルドする場合は**EnderLead用の別リポジトリ**にソースを置いてください。Mercenaryのリポジトリにコミットしてはいけません。
@@ -62,3 +62,16 @@ GitHub Actions（Java 25 / Paper API 26.3）の Gradle ビルド成功を確認�
 - 同じ種類の通常の野生モブは捕獲できます（既存のボス・HP制限は適用）。
 - PvE側のプラグイン・リポジトリを変更する必要はありません。
 - PvE内部構造が変わり判定不能になった場合は、誤捕獲を防ぐためPvE稼働中の捕獲を禁止します。
+
+## クラフトの有効・無効
+
+`plugins/EnderLead/config.yml` で以下のように設定します。
+
+```yaml
+crafting:
+  enabled: false
+```
+
+`/enderlead reload` を実行すると、現在のレシピが再登録／削除されます。
+`enabled: false` にしても、管理者コマンド `/enderlead give <プレイヤー>` による入手や既存のリードの捕獲・解放は利用できます。
+古い `config.yml` には `crafting` キーがないため、クラフトを無効にする場合は手動でこの設定を追加してください。
