@@ -1,7 +1,7 @@
 name: EnderLead
-version: '1.0.3'
+version: '1.0.4'
 main: dev.emerald.enderlead.EnderLeadPlugin
-softdepend: [Mercenary]
+softdepend: [Mercenary, pipi_pve]
 api-version: '26.3'
 author: Emerald
 website: https://papermc.io/
