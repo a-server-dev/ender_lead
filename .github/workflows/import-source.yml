@@ -23,6 +23,7 @@ jobs:
           mkdir -p .source-import
           tar -xJf source/EnderLead-1.0.3.tar.xz -C .source-import
           cp -a .source-import/EnderLead-1.0.3/. .
+          git restore .github/workflows/build.yml
           rm -rf .source-import
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
